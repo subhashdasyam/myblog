@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Subhash Dasyam">
+  <title>Understanding Language Models: Traditional vs. Transformers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: #2a5885;
+    }
+    .demo-container {
+      margin: 30px 0;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background-color: #f9f9f9;
+    }
+    .control-panel {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #eef2f7;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #2a5885;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #1e3c5c;
+    }
+    .slow-text {
+      min-height: 100px;
+      margin: 15px 0;
+      font-size: 18px;
+      padding: 10px;
+      background-color: white;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+    .highlighted {
+      background-color: #ffeb3b;
+      padding: 2px;
+    }
+    .fade {
+      opacity: 0.3;
+    }
+    .model-container {
+      display: flex;
+      margin: 20px 0;
+    }
+    .model-column {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 0 10px;
+      background-color: white;
+    }
+    .model-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .model-output {
+      min-height: 100px;
+      border: 1px solid #eee;
+      padding: 10px;
+      border-radius: 4px;
+      background-color: #f5f5f5;
+    }
+    #attention-visualization {
+      position: relative;
+      height: 180px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      margin: 15px 0;
+    }
+    .word-box {
+      display: inline-block;
+      padding: 5px 10px;
+      margin: 5px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      background-color: white;
+    }
+    .word-box:hover, .word-box.active {
+      background-color: #e3f2fd;
+      border-color: #2196f3;
+    }
+    .attention-line {
+      position: absolute;
+      background-color: rgba(33, 150, 243, 0.3);
+      z-index: 1;
+      transform-origin: 0 0;
+    }
+    .instruction {
+      font-style: italic;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .legend {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+    }
+    .legend-color {
+      width: 15px;
+      height: 10px;
+      margin-right: 5px;
+    }
+    .explanation {
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 5px;
+      margin: 15px 0;
+    }
+    .loader {
+      width: 100%;
+      height: 3px;
+      background-color: #f3f3f3;
+      position: relative;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .loader:before {
+      content: "";
+      position: absolute;
+      left: -50%;
+      height: 3px;
+      width: 40%;
+      background-color: #2a5885;
+      animation: loading 1.5s infinite ease;
+    }
+    @keyframes loading {
+      0% {
+        left: -50%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+    #reset-button {
+      background-color: #f44336;
+    }
+    #reset-button:hover {
+      background-color: #d32f2f;
+    }
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+    }
+    .signature {
+      font-style: italic;
+      margin-top: 10px;
+    }
+    .creator-signature {
+      font-weight: bold;
+      color: #2a5885;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Visualizations: Traditional Models vs. Transformers</h1>
+  
+  <div class="demo-container">
+    <h2>Demo 1: The Sequential Processing Problem</h2>
+    <p>This demonstration shows how traditional models (like RNNs) process text one word at a time, while transformers process all words simultaneously.</p>
+    
+    <div class="control-panel">
+      <button id="start-sequential">Show Sequential Processing (Traditional)</button>
+      <button id="start-parallel">Show Parallel Processing (Transformer)</button>
+      <button id="reset-demo1" class="reset-button">Reset</button>
+    </div>
+    
+    <div id="sequential-container" class="slow-text"></div>
+    <div id="parallel-container" class="slow-text"></div>
+    
+    <div class="explanation">
+      <p><strong>What's happening:</strong> The first button demonstrates how traditional models like RNNs process text sequentially (one word at a time), causing delays in processing. The second button shows how transformers process the entire sentence simultaneously, allowing for much faster processing and parallel computation.</p>
+    </div>
+  </div>
+  
+  <div class="demo-container">
+    <h2>Demo 2: Long-Distance Relationships in Text</h2>
+    <p>This demonstration shows how traditional models struggle with long-distance relationships in text, while transformers can directly connect related words.</p>
+    
+    <div class="control-panel">
+      <select id="example-selector">
+        <option value="example1">Example 1: Pronoun Reference</option>
+        <option value="example2">Example 2: Subject-Verb Agreement</option>
+        <option value="example3">Example 3: Complex Context</option>
+      </select>
+      <button id="run-comparison">Compare Models</button>
+      <button id="reset-demo2" class="reset-button">Reset</button>
+    </div>
+    
+    <div id="example-text" class="slow-text"></div>
+    
+    <div class="model-container">
+      <div class="model-column">
+        <div class="model-title">Traditional Model (RNN/LSTM)</div>
+        <div id="traditional-processing" class="slow-text"></div>
+        <div id="traditional-output" class="model-output"></div>
+      </div>
+      <div class="model-column">
+        <div class="model-title">Transformer Model</div>
+        <div id="transformer-processing" class="slow-text"></div>
+        <div id="transformer-output" class="model-output"></div>
+      </div>
+    </div>
+    
+    <div class="explanation">
+      <p><strong>What's happening:</strong> This demo illustrates how traditional models must process information sequentially, causing them to "forget" earlier context in long sentences. In contrast, transformers can make direct connections between related words regardless of distance, allowing them to better understand complex relationships in text.</p>
+    </div>
+  </div>
+  
+  <div class="demo-container">
+    <h2>Demo 3: Visualizing Attention in Transformers</h2>
+    <p>This interactive demo shows how attention works in transformer models, allowing direct connections between related words regardless of their position in the sentence.</p>
+    
+    <div class="control-panel">
+      <select id="sentence-selector">
+        <option value="sentence1">The trophy wouldn't fit in the brown suitcase because it was too big.</option>
+        <option value="sentence2">The animals ran across the field because they were afraid of the storm.</option>
+        <option value="sentence3">Although the restaurant was expensive, John still recommended it because the food was exceptional.</option>
+      </select>
+      <button id="show-sentence">Show Sentence</button>
+      <button id="reset-demo3" class="reset-button">Reset</button>
+    </div>
+    
+    <div class="instruction">Click on any word to see which other words it pays attention to:</div>
+    <div id="attention-visualization"></div>
+    
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: rgba(33, 150, 243, 0.8);"></div>
+        <span>Strong attention</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: rgba(33, 150, 243, 0.3);"></div>
+        <span>Medium attention</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: rgba(33, 150, 243, 0.1);"></div>
+        <span>Weak attention</span>
+      </div>
+    </div>
+    
+    <div class="explanation">
+      <p><strong>What's happening:</strong> This visualization demonstrates how the attention mechanism in transformers allows words to directly "attend to" other words in a sentence. When you click on a word, you can see which other words it pays attention to, with line thickness indicating the strength of attention. This direct connection allows transformers to understand relationships between words regardless of their distance from each other.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>Developed by <span class="creator-signature">Subhash Dasyam</span> | © 2025 All Rights Reserved</p>
+    <p class="signature">Part of the "Transformer Revolution" educational series</p>
+  </footer>
+
+  <script>
+    /**
+     * Interactive Transformer Visualizations
+     * Created by Subhash Dasyam
+     * Copyright © 2025 All Rights Reserved
+     */
+    
+    // Demo 1: Sequential vs Parallel Processing
+    document.getElementById('start-sequential').addEventListener('click', function() {
+      const container = document.getElementById('sequential-container');
+      container.innerHTML = '';
+      const sentence = "The transformer architecture revolutionized natural language processing.";
+      const words = sentence.split(' ');
+      
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < words.length) {
+          container.innerHTML += words[i] + ' ';
+          i++;
+        } else {
+          clearInterval(interval);
+          container.innerHTML += '<p><strong>Sequential processing complete!</strong> (Traditional models process text word-by-word)</p>';
+        }
+      }, 600); // Show one word every 600ms
+    });
+    
+    document.getElementById('start-parallel').addEventListener('click', function() {
+      const container = document.getElementById('parallel-container');
+      container.innerHTML = '';
+      const sentence = "The transformer architecture revolutionized natural language processing.";
+      
+      // First show all words at once
+      container.innerHTML = sentence;
+      
+      // Then highlight each word in quick succession to show parallel processing
+      const words = sentence.split(' ');
+      let highlighted = {};
+      
+      setTimeout(() => {
+        container.innerHTML = '';
+        for (let i = 0; i < words.length; i++) {
+          const span = document.createElement('span');
+          span.innerText = words[i] + ' ';
+          span.id = `word-${i}`;
+          container.appendChild(span);
+          highlighted[i] = false;
+        }
+        
+        let count = 0;
+        const highlightInterval = setInterval(() => {
+          // Generate 2-3 random indices to highlight simultaneously
+          const numToHighlight = Math.floor(Math.random() * 2) + 2;
+          const indices = [];
+          while (indices.length < numToHighlight && count < words.length * 3) {
+            const idx = Math.floor(Math.random() * words.length);
+            if (!indices.includes(idx)) {
+              indices.push(idx);
+            }
+          }
+          
+          // Remove previous highlights
+          for (let i = 0; i < words.length; i++) {
+            const wordSpan = document.getElementById(`word-${i}`);
+            wordSpan.classList.remove('highlighted');
+          }
+          
+          // Add new highlights
+          for (const idx of indices) {
+            const wordSpan = document.getElementById(`word-${idx}`);
+            wordSpan.classList.add('highlighted');
+            highlighted[idx] = true;
+          }
+          
+          count++;
+          
+          // Check if all words have been highlighted at least once
+          const allHighlighted = Object.values(highlighted).every(h => h);
+          if (count > 12 || allHighlighted) {
+            clearInterval(highlightInterval);
+            // Reset highlights and show completion message
+            for (let i = 0; i < words.length; i++) {
+              const wordSpan = document.getElementById(`word-${i}`);
+              wordSpan.classList.remove('highlighted');
+            }
+            const message = document.createElement('p');
+            message.innerHTML = '<strong>Parallel processing complete!</strong> (Transformers process all words simultaneously)';
+            container.appendChild(message);
+          }
+        }, 400); // Highlight new words every 400ms
+      }, 1000);
+    });
+    
+    document.getElementById('reset-demo1').addEventListener('click', function() {
+      document.getElementById('sequential-container').innerHTML = '';
+      document.getElementById('parallel-container').innerHTML = '';
+    });
+  
+    // Demo 2: Comparing Models on Long-Distance Relationships
+    const examples = {
+      example1: {
+        text: "The trophy wouldn't fit in the brown suitcase because it was too big.",
+        question: "What was too big?",
+        traditionalAnswer: "The suitcase (INCORRECT)",
+        transformerAnswer: "The trophy (CORRECT)"
+      },
+      example2: {
+        text: "The keys to the cabinet are on the table, but nobody has moved them since yesterday.",
+        question: "What hasn't been moved since yesterday?",
+        traditionalAnswer: "The cabinet (INCORRECT)",
+        transformerAnswer: "The keys (CORRECT)"
+      },
+      example3: {
+        text: "When John visited Paris last summer, he took many photos of famous landmarks because he loves architecture.",
+        question: "Who loves architecture?",
+        traditionalAnswer: "Paris (INCORRECT)",
+        transformerAnswer: "John (CORRECT)"
+      }
+    };
+    
+    document.getElementById('example-selector').addEventListener('change', function() {
+      const example = examples[this.value];
+      document.getElementById('example-text').textContent = example.text;
+    });
+    
+    document.getElementById('run-comparison').addEventListener('click', function() {
+      const exampleId = document.getElementById('example-selector').value;
+      const example = examples[exampleId];
+      
+      // Display the example text and question
+      document.getElementById('example-text').innerHTML = `
+        <strong>Text:</strong> ${example.text}<br>
+        <strong>Question:</strong> ${example.question}
+      `;
+      
+      // Show traditional model processing - sequential and losing information
+      const tradContainer = document.getElementById('traditional-processing');
+      const transformerContainer = document.getElementById('transformer-processing');
+      tradContainer.innerHTML = '';
+      transformerContainer.innerHTML = '';
+      
+      const words = example.text.split(' ');
+      
+      // Process traditional model sequentially
+      let i = 0;
+      tradContainer.innerHTML = '<div class="loader"></div>';
+      const tradInterval = setInterval(() => {
+        if (i < words.length) {
+          // Simulate "forgetting" by fading out earlier words as new ones are processed
+          tradContainer.innerHTML = '';
+          for (let j = 0; j <= i; j++) {
+            const span = document.createElement('span');
+            span.innerText = words[j] + ' ';
+            
+            // Apply fading effect based on distance from current word
+            const fade = 1 - Math.min(0.8, (i - j) * 0.1);
+            span.style.opacity = fade;
+            
+            tradContainer.appendChild(span);
+          }
+          i++;
+        } else {
+          clearInterval(tradInterval);
+          setTimeout(() => {
+            document.getElementById('traditional-output').innerHTML = `
+              <strong>Answer:</strong> ${example.traditionalAnswer}
+            `;
+          }, 500);
+        }
+      }, 300);
+      
+      // Process transformer model in parallel
+      transformerContainer.innerHTML = '<div class="loader"></div>';
+      setTimeout(() => {
+        transformerContainer.innerHTML = example.text;
+        
+        // Simulate attention by highlighting related words based on the example
+        setTimeout(() => {
+          transformerContainer.innerHTML = '';
+          
+          // Identify the key words for this example
+          let keyWords = [];
+          let questionWord = "";
+          
+          if (exampleId === 'example1') {
+            keyWords = ['trophy', 'it', 'big'];
+            questionWord = "it";
+          } else if (exampleId === 'example2') {
+            keyWords = ['keys', 'them'];
+            questionWord = "them";
+          } else if (exampleId === 'example3') {
+            keyWords = ['John', 'he', 'loves'];
+            questionWord = "he";
+          }
+          
+          // Create spans for all words
+          for (let j = 0; j < words.length; j++) {
+            const word = words[j].replace(/[.,;!?]$/, ''); // Remove punctuation
+            const span = document.createElement('span');
+            
+            // Add back any punctuation that was removed
+            span.innerText = words[j] + ' ';
+            
+            // Highlight key words
+            if (keyWords.includes(word.toLowerCase())) {
+              span.classList.add('highlighted');
+            }
+            
+            // Extra highlight for the pronoun being resolved
+            if (word.toLowerCase() === questionWord) {
+              span.style.fontWeight = 'bold';
+              span.style.textDecoration = 'underline';
+            }
+            
+            transformerContainer.appendChild(span);
+          }
+          
+          setTimeout(() => {
+            document.getElementById('transformer-output').innerHTML = `
+              <strong>Answer:</strong> ${example.transformerAnswer}
+            `;
+          }, 800);
+        }, 1000);
+      }, 1500);
+    });
+    
+    document.getElementById('reset-demo2').addEventListener('click', function() {
+      document.getElementById('example-text').innerHTML = '';
+      document.getElementById('traditional-processing').innerHTML = '';
+      document.getElementById('transformer-processing').innerHTML = '';
+      document.getElementById('traditional-output').innerHTML = '';
+      document.getElementById('transformer-output').innerHTML = '';
+    });
+    
+    // Set initial example
+    document.getElementById('example-text').textContent = examples.example1.text;
+    
+    // Demo 3: Attention Visualization
+    const sentences = {
+      sentence1: {
+        text: "The trophy wouldn't fit in the brown suitcase because it was too big.",
+        attention: {
+          'it': {
+            'trophy': 0.75,
+            'suitcase': 0.15,
+            'fit': 0.05,
+            'big': 0.05
+          },
+          'big': {
+            'trophy': 0.6,
+            'it': 0.2,
+            'suitcase': 0.1,
+            'fit': 0.1
+          },
+          'trophy': {
+            'it': 0.4,
+            'big': 0.3,
+            'fit': 0.2,
+            'suitcase': 0.1
+          },
+          'suitcase': {
+            'fit': 0.3,
+            'in': 0.2,
+            'trophy': 0.2,
+            'brown': 0.3
+          }
+        }
+      },
+      sentence2: {
+        text: "The animals ran across the field because they were afraid of the storm.",
+        attention: {
+          'they': {
+            'animals': 0.8,
+            'ran': 0.1,
+            'afraid': 0.1
+          },
+          'afraid': {
+            'animals': 0.5,
+            'they': 0.3,
+            'storm': 0.2
+          },
+          'animals': {
+            'they': 0.6,
+            'ran': 0.3,
+            'afraid': 0.1
+          },
+          'storm': {
+            'afraid': 0.7,
+            'they': 0.2,
+            'animals': 0.1
+          }
+        }
+      },
+      sentence3: {
+        text: "Although the restaurant was expensive, John still recommended it because the food was exceptional.",
+        attention: {
+          'it': {
+            'restaurant': 0.85,
+            'recommended': 0.1,
+            'expensive': 0.05
+          },
+          'food': {
+            'restaurant': 0.6,
+            'exceptional': 0.3,
+            'it': 0.1
+          },
+          'recommended': {
+            'John': 0.5,
+            'restaurant': 0.3,
+            'it': 0.2
+          },
+          'exceptional': {
+            'food': 0.7,
+            'restaurant': 0.2,
+            'recommended': 0.1
+          }
+        }
+      }
+    };
+    
+    function createWordBoxes(sentence) {
+      const container = document.getElementById('attention-visualization');
+      container.innerHTML = '';
+      
+      const words = sentence.text.split(' ');
+      const wordElements = [];
+      
+      // Create word boxes
+      for (let i = 0; i < words.length; i++) {
+        const wordBox = document.createElement('div');
+        wordBox.className = 'word-box';
+        wordBox.textContent = words[i];
+        wordBox.dataset.word = words[i].replace(/[.,;!?]$/, '').toLowerCase(); // Store clean word
+        wordBox.dataset.index = i;
+        container.appendChild(wordBox);
+        wordElements.push(wordBox);
+        
+        // Add click handler
+        wordBox.addEventListener('click', function() {
+          // Clear previous active state and lines
+          document.querySelectorAll('.word-box').forEach(box => box.classList.remove('active'));
+          document.querySelectorAll('.attention-line').forEach(line => line.remove());
+          
+          // Set active state
+          this.classList.add('active');
+          
+          const word = this.dataset.word;
+          
+          // Skip words without defined attention patterns
+          if (!sentence.attention[word]) {
+            return;
+          }
+          
+          // Draw attention lines
+          for (const targetWord in sentence.attention[word]) {
+            const attention = sentence.attention[word][targetWord];
+            
+            // Find target word element
+            const targetElement = Array.from(document.querySelectorAll('.word-box')).find(
+              el => el.dataset.word.toLowerCase() === targetWord.toLowerCase()
+            );
+            
+            if (targetElement) {
+              drawAttentionLine(this, targetElement, attention);
+            }
+          }
+        });
+      }
+    }
+    
+    function drawAttentionLine(sourceEl, targetEl, strength) {
+      const container = document.getElementById('attention-visualization');
+      const sourceRect = sourceEl.getBoundingClientRect();
+      const targetRect = targetEl.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      
+      // Calculate positions relative to container
+      const start = {
+        x: sourceRect.left + sourceRect.width / 2 - containerRect.left,
+        y: sourceRect.top + sourceRect.height / 2 - containerRect.top
+      };
+      
+      const end = {
+        x: targetRect.left + targetRect.width / 2 - containerRect.left,
+        y: targetRect.top + targetRect.height / 2 - containerRect.top
+      };
+      
+      // Create line
+      const line = document.createElement('div');
+      line.className = 'attention-line';
+      
+      // Set line position and dimensions
+      const length = Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
+      const angle = Math.atan2(end.y - start.y, end.x - start.x) * 180 / Math.PI;
+      
+      line.style.width = `${length}px`;
+      line.style.height = `${Math.max(2, strength * 8)}px`; // Line thickness based on attention strength
+      line.style.left = `${start.x}px`;
+      line.style.top = `${start.y}px`;
+      line.style.transform = `rotate(${angle}deg)`;
+      line.style.opacity = Math.min(0.9, strength + 0.2);
+      line.style.backgroundColor = `rgba(33, 150, 243, ${Math.min(0.8, strength + 0.1)})`;
+      
+      container.appendChild(line);
+    }
+    
+    document.getElementById('show-sentence').addEventListener('click', function() {
+      const sentenceId = document.getElementById('sentence-selector').value;
+      const sentence = sentences[sentenceId];
+      createWordBoxes(sentence);
+    });
+    
+    document.getElementById('reset-demo3').addEventListener('click', function() {
+      document.getElementById('attention-visualization').innerHTML = '';
+    });
+    
+    // Initialize with first sentence
+    document.addEventListener('DOMContentLoaded', function() {
+      const sentenceId = document.getElementById('sentence-selector').value;
+      const sentence = sentences[sentenceId];
+      createWordBoxes(sentence);
+    });
+    
+    /* 
+     * Created with ❤️ by Subhash Dasyam
+     * Part of "The Transformer Revolution" educational series
+     * © 2025 All Rights Reserved
+     */
+  </script>
+</body>
+</html>
