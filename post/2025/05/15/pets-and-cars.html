@@ -1,368 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Joy of Pets and the Thrill of Cars | Git Pages React Framework</title>
-  <meta name="description" content="Exploring the special bonds we form with our animal companions and our fascination with automobiles">
-  <link rel="canonical" href="/post/2025/05/15/pets-and-cars.html">
-  
-  <!-- Open Graph tags -->
-  <meta property="og:title" content="The Joy of Pets and the Thrill of Cars">
-  <meta property="og:description" content="Exploring the special bonds we form with our animal companions and our fascination with automobiles">
-  <meta property="og:url" content="/post/2025/05/15/pets-and-cars.html">
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Git Pages React Framework">
-  
-  <!-- Twitter Card tags -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="The Joy of Pets and the Thrill of Cars">
-  <meta name="twitter:description" content="Exploring the special bonds we form with our animal companions and our fascination with automobiles">
-  
-  <style>
-    
-    :root {
-      --color-primary: #3498db;
-      --color-secondary: #2c3e50;
-      --color-background: #ffffff;
-      --color-text: #333333;
-      --color-link: #3498db;
-      --color-border: #eeeeee;
-      --color-codeBackground: #f5f5f5;
-      --color-tableHeader: #f5f5f5;
-      --color-tableBorder: #dddddd;
-      
-      --spacing-unit: 1rem;
-      --spacing-small: 0.5rem;
-      --spacing-medium: 1rem;
-      --spacing-large: 2rem;
-    }
-    
-    body {
-      font-family: var(--font-body);
-      color: var(--color-text);
-      background-color: var(--color-background);
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--spacing-medium);
-    }
-    
-    header {
-      padding: var(--spacing-medium) 0;
-      border-bottom: 1px solid var(--color-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .header-content {
-      display: flex;
-      align-items: center;
-    }
-    
-    .site-title {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-    
-    .site-title a {
-      color: var(--color-text);
-      text-decoration: none;
-    }
-    
-    nav {
-      margin-left: 2rem;
-    }
-    
-    nav ul {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    
-    nav li {
-      margin-left: 1.5rem;
-    }
-    
-    main {
-      padding: var(--spacing-large) 0;
-    }
-    
-    footer {
-      padding: var(--spacing-medium) 0;
-      border-top: 1px solid var(--color-border);
-      text-align: center;
-      font-size: 0.9rem;
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-      font-family: var(--font-heading);
-      margin-top: var(--spacing-large);
-      margin-bottom: var(--spacing-medium);
-      line-height: 1.3;
-    }
-    
-    a {
-      color: var(--color-link);
-      text-decoration: none;
-    }
-    
-    a:hover {
-      text-decoration: underline;
-    }
-    
-    pre {
-      background-color: var(--color-codeBackground);
-      padding: var(--spacing-medium);
-      border-radius: 5px;
-      overflow-x: auto;
-      margin-bottom: var(--spacing-medium);
-    }
-    
-    code {
-      font-family: var(--font-code);
-      background-color: var(--color-codeBackground);
-      padding: 0.2em 0.4em;
-      border-radius: 3px;
-    }
-    
-    pre code {
-      background-color: transparent;
-      padding: 0;
-    }
-    
-    blockquote {
-      border-left: 4px solid var(--color-primary);
-      margin-left: 0;
-      padding-left: var(--spacing-medium);
-      font-style: italic;
-    }
-    
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin: var(--spacing-medium) 0;
-    }
-    
-    th, td {
-      padding: var(--spacing-small);
-      border: 1px solid var(--color-tableBorder);
-    }
-    
-    th {
-      background-color: var(--color-tableHeader);
-      text-align: left;
-    }
-    
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: var(--spacing-medium) 0;
-    }
-    
-    .theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      padding: var(--spacing-small);
-    }
-    
-    .article-header {
-      margin-bottom: var(--spacing-large);
-    }
-    
-    .article-title {
-      margin: 0 0 var(--spacing-medium) 0;
-      font-size: 2.5rem;
-      line-height: 1.2;
-    }
-    
-    .article-meta {
-      color: var(--color-secondary);
-      font-size: 0.9rem;
-      margin-bottom: var(--spacing-medium);
-    }
-    
-    .article-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--spacing-small);
-      margin-bottom: var(--spacing-medium);
-    }
-    
-    .tag {
-      background-color: var(--color-primary);
-      color: white;
-      padding: 0.2rem 0.5rem;
-      border-radius: 3px;
-      font-size: 0.8rem;
-    }
-    
-    .post-item {
-      margin-bottom: var(--spacing-large);
-      border-bottom: 1px solid var(--color-border);
-      padding-bottom: var(--spacing-medium);
-      display: flex;
-      flex-direction: column;
-    }
-    
-    @media (min-width: 768px) {
-      .post-item {
-        flex-direction: row;
-        gap: var(--spacing-large);
-      }
-    }
-    
-    .post-item:last-child {
-      border-bottom: none;
-    }
-    
-    .post-thumbnail {
-      flex: 0 0 auto;
-      margin-bottom: var(--spacing-medium);
-    }
-    
-    @media (min-width: 768px) {
-      .post-thumbnail {
-        width: 250px;
-        margin-bottom: 0;
-      }
-    }
-    
-    .post-thumbnail img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
-    
-    .post-content {
-      flex: 1;
-    }
-    
-    .post-title {
-      margin: 0 0 var(--spacing-small) 0;
-    }
-    
-    .post-meta {
-      color: var(--color-secondary);
-      font-size: 0.9rem;
-      margin-bottom: var(--spacing-small);
-    }
-    
-    .post-excerpt {
-      margin-bottom: var(--spacing-medium);
-    }
-    
-    .read-more {
-      color: var(--color-primary);
-      font-weight: bold;
-    }
-    
-    /* Dark theme */
-    html[data-theme='dark'] {
-      --color-background: #121212;
-      --color-text: #e0e0e0;
-      --color-link: #61dafb;
-      --color-border: #333333;
-      --color-codeBackground: #2a2a2a;
-      --color-tableHeader: #2a2a2a;
-      --color-tableBorder: #444444;
-    }
-    
-    /* Responsive styles */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-      }
-      
-      nav {
-        margin-left: 0;
-        margin-top: 1rem;
-        width: 100%;
-      }
-      
-      nav ul {
-        flex-wrap: wrap;
-      }
-      
-      nav li {
-        margin-left: 0;
-        margin-right: 1.5rem;
-        margin-top: 0.5rem;
-      }
-      
-      .theme-toggle {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-      }
-      
-      .article-title {
-        font-size: 2rem;
-      }
-    }
-  
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <div class="header-content">
-        <h1 class="site-title"><a href="/">Git Pages React Framework</a></h1>
-        <nav>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/about">About</a></li>
-          </ul>
-        </nav>
-      </div>
-      <button class="theme-toggle" id="theme-toggle">🌙</button>
-    </header>
-    
-    <main>
-      <article>
-        <header class="article-header">
-          <h1 class="article-title">The Joy of Pets and the Thrill of Cars</h1>
-          <div class="article-meta">
-            <time datetime="2025-05-15T00:00:00.000Z">May 15, 2025</time>
-          </div>
-          
-          <div class="article-tags">
-            <span class="tag">pets</span><span class="tag">animals</span><span class="tag">cars</span><span class="tag">lifestyle</span>
-          </div>
-          
-        </header>
-        
-        <div class="article-content">
-          <h1>The Joy of Pets and the Thrill of Cars</h1>
-<p>In today&#39;s fast-paced world, two things bring particular joy to many people&#39;s lives: the companionship of pets and the freedom of automobiles. This article explores our fascinating relationships with both animals and machines.</p>
-<h2>Our Loyal Canine Friends</h2>
-<p>Dogs have been human companions for thousands of years, earning the title of &quot;man&#39;s best friend&quot; through their unwavering loyalty, affection, and intuitive understanding of human emotions.</p>
-<picture>
-  <source type="image/webp" srcset="/assets/webp/dog-320.webp 320w, /assets/webp/dog-640.webp 640w, /assets/webp/dog-960.webp 960w, /assets/webp/dog-1280.webp 1280w" sizes="(max-width: 1280px) 100vw, 1280px">
-  <source type="image/jpg" srcset="/assets/responsive/dog-320.jpg 320w, /assets/responsive/dog-640.jpg 640w, /assets/responsive/dog-960.jpg 960w, /assets/responsive/dog-1280.jpg 1280w" sizes="(max-width: 1280px) 100vw, 1280px">
-  <img src="/assets/images/dog.jpg" alt="A beautiful dog with soulful eyes" loading="lazy">
-</picture>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Joy of Pets and the Thrill of Cars | The Tech Depth</title>
+        <meta name="description" content="Exploring the special bonds we form with our animal companions and our fascination with automobiles">
+        <meta property="og:title" content="The Joy of Pets and the Thrill of Cars">
+        <meta property="og:description" content="Exploring the special bonds we form with our animal companions and our fascination with automobiles">
+        <meta property="og:image" content="/assets/thumbnails/pets-and-cars-dog.jpg">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary_large_image">
+        <link rel="stylesheet" href="/themes/zen-reader/theme.css">
+        <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+        <meta name="theme-color" content="#007acc">
+        <link rel="icon" href="/themes/zen-reader/assets/favicon.ico">
+      </head>
+      <body>
+        <div class="page-container">
+          <!-- Sidebar -->
+          <header>
+            <div class="header-content">
+              <h1 class="site-title"><a href="/">The Tech Depth</a></h1>
+              <nav>
+                <ul>
+                  <li><a href="/">Home</a></li><li><a href="/post/2025/05/11/transformers-games-1.html">Transformer Games 1</a></li><li><a href="https://linkedin.com/in/subhashdasyam">About</a></li>
+                </ul>
+              </nav>
+            </div>
+            <button class="theme-toggle" id="theme-toggle">🌙</button>
+            <!-- Footer moved to sidebar -->
+            <div class="sidebar-footer">
+              <p>&copy; 2025 The Tech Depth. All rights reserved.</p>
+              <p>Built with <a href="https://github.com/subhashdasyam/git-pages-react">Git Pages React Framework</a></p>
+            </div>
+          </header>
 
-<p>Whether they&#39;re retrieving balls, guarding homes, assisting people with disabilities, or simply providing companionship, dogs enrich our lives in countless ways. Their ability to form deep emotional bonds with humans is unmatched in the animal kingdom.</p>
+          <div class="content-wrap">
+            <!-- Main Content -->
+            <main class="post-page">
+              <div class="post-hero-image">
+      <img src="/assets/thumbnails/pets-and-cars-dog.jpg" alt="The Joy of Pets and the Thrill of Cars">
+    </div>
+              
+              <article class="post-content">
+                <h1 class="post-title">The Joy of Pets and the Thrill of Cars</h1>
+                <div class="post-meta">
+                  <time datetime="2025-05-15T00:00:00.000Z">May 15, 2025</time>
+                  <span class="reading-time">3 min read</span>
+                </div>
+                
+                <div class="post-tags">
+      <span class="tag">pets</span><span class="tag">animals</span><span class="tag">cars</span><span class="tag">lifestyle</span>
+    </div>
+                
+                <div class="post-body"><h1>The Joy of Pets and the Thrill of Cars</h1>
+<p>In today's fast-paced world, two things bring particular joy to many people's lives: the companionship of pets and the freedom of automobiles. This article explores our fascinating relationships with both animals and machines.</p>
+<h2>Our Loyal Canine Friends</h2>
+<p>Dogs have been human companions for thousands of years, earning the title of "man's best friend" through their unwavering loyalty, affection, and intuitive understanding of human emotions.</p>
+<p><img src="/assets/images/dog.jpg" alt="A beautiful dog with soulful eyes" loading="lazy"></p>
+<p>Whether they're retrieving balls, guarding homes, assisting people with disabilities, or simply providing companionship, dogs enrich our lives in countless ways. Their ability to form deep emotional bonds with humans is unmatched in the animal kingdom.</p>
 <p>Studies have shown that dog owners often experience:</p>
 <ul>
 <li>Lower stress levels</li>
@@ -373,13 +69,8 @@
 </ul>
 <h2>The Mysterious Feline Companions</h2>
 <p>Cats, with their independent nature and mysterious demeanor, offer a different but equally rewarding type of companionship.</p>
-<picture>
-  <source type="image/webp" srcset="/assets/webp/cat-320.webp 320w, /assets/webp/cat-640.webp 640w, /assets/webp/cat-960.webp 960w, /assets/webp/cat-1280.webp 1280w" sizes="(max-width: 1280px) 100vw, 1280px">
-  <source type="image/jpg" srcset="/assets/responsive/cat-320.jpg 320w, /assets/responsive/cat-640.jpg 640w, /assets/responsive/cat-960.jpg 960w, /assets/responsive/cat-1280.jpg 1280w" sizes="(max-width: 1280px) 100vw, 1280px">
-  <img src="/assets/images/cat.jpg" alt="An elegant cat with piercing green eyes" loading="lazy">
-</picture>
-
-<p>Unlike dogs, cats don&#39;t seek to please their human companions, yet they form deep attachments in their own way. Their purring has been shown to have therapeutic effects, and their playful antics provide endless entertainment.</p>
+<p><img src="/assets/images/cat.jpg" alt="An elegant cat with piercing green eyes" loading="lazy"></p>
+<p>Unlike dogs, cats don't seek to please their human companions, yet they form deep attachments in their own way. Their purring has been shown to have therapeutic effects, and their playful antics provide endless entertainment.</p>
 <p>Cat owners often appreciate:</p>
 <ul>
 <li>Their low-maintenance nature</li>
@@ -390,12 +81,7 @@
 </ul>
 <h2>The Colorful World of Parrots</h2>
 <p>For those seeking more exotic animal companions, parrots offer intelligence, vibrant colors, and the ability to mimic human speech.</p>
-<picture>
-  <source type="image/webp" srcset="/assets/webp/parrot-320.webp 320w, /assets/webp/parrot-640.webp 640w, /assets/webp/parrot-960.webp 960w, /assets/webp/parrot-1280.webp 1280w" sizes="(max-width: 1280px) 100vw, 1280px">
-  <source type="image/jpg" srcset="/assets/responsive/parrot-320.jpg 320w, /assets/responsive/parrot-640.jpg 640w, /assets/responsive/parrot-960.jpg 960w, /assets/responsive/parrot-1280.jpg 1280w" sizes="(max-width: 1280px) 100vw, 1280px">
-  <img src="/assets/images/parrot.jpg" alt="A colorful parrot with bright plumage" loading="lazy">
-</picture>
-
+<p><img src="/assets/images/parrot.jpg" alt="A colorful parrot with bright plumage" loading="lazy"></p>
 <p>Parrots are among the most intelligent birds, with some species demonstrating the cognitive abilities of a 4-5 year old human child. They can learn to speak hundreds of words, solve complex puzzles, and form strong bonds with their human caretakers.</p>
 <p>Parrot enthusiasts value:</p>
 <ul>
@@ -406,13 +92,8 @@
 <li>Their striking beauty</li>
 </ul>
 <h2>The Engineering Marvel of Automobiles</h2>
-<p>Shifting gears from the natural world to human engineering, cars represent one of humanity&#39;s most transformative inventions, offering freedom, convenience, and for many, a source of passion.</p>
-<picture>
-  <source type="image/webp" srcset="/assets/webp/car-320.webp 320w, /assets/webp/car-640.webp 640w, /assets/webp/car-960.webp 960w, /assets/webp/car-1280.webp 1280w" sizes="(max-width: 1280px) 100vw, 1280px">
-  <source type="image/jpg" srcset="/assets/responsive/car-320.jpg 320w, /assets/responsive/car-640.jpg 640w, /assets/responsive/car-960.jpg 960w, /assets/responsive/car-1280.jpg 1280w" sizes="(max-width: 1280px) 100vw, 1280px">
-  <img src="/assets/images/car.jpg" alt="A sleek sports car on an open road" loading="lazy">
-</picture>
-
+<p>Shifting gears from the natural world to human engineering, cars represent one of humanity's most transformative inventions, offering freedom, convenience, and for many, a source of passion.</p>
+<p><img src="/assets/images/car.jpg" alt="A sleek sports car on an open road" loading="lazy"></p>
 <p>From practical family vehicles to high-performance sports cars, automobiles have become extensions of our personalities and lifestyles. They connect us to distant places, enable economic activity, and for enthusiasts, provide a thrilling blend of engineering, art, and performance.</p>
 <p>Car enthusiasts appreciate:</p>
 <ul>
@@ -426,44 +107,59 @@
 <p>Interestingly, many people find joy in both pets and cars, creating a balanced lifestyle that embraces both the natural world and human innovation. A weekend drive to a pet-friendly destination combines the best of both worlds.</p>
 <p>In our increasingly digital age, both pets and cars offer tangible, real-world experiences that engage our senses and emotions in ways that virtual interactions cannot.</p>
 <h2>Conclusion</h2>
-<p>Whether you&#39;re a dog person, a cat lover, a bird enthusiast, a car aficionado, or someone who appreciates all of the above, these relationships add richness and dimension to our lives. They connect us to something beyond ourselves—whether it&#39;s the ancient bond between humans and animals or the pinnacle of human engineering achievement.</p>
+<p>Whether you're a dog person, a cat lover, a bird enthusiast, a car aficionado, or someone who appreciates all of the above, these relationships add richness and dimension to our lives. They connect us to something beyond ourselves—whether it's the ancient bond between humans and animals or the pinnacle of human engineering achievement.</p>
 <p>What pets or cars have brought joy to your life? The stories we share about our animal companions and favorite vehicles often reveal much about our values, personalities, and the experiences that shape us.</p>
+</div>
+                
+                
+    <div class="social-sharing">
+      <h3>Share this post</h3>
+      <div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?text=The%20Joy%20of%20Pets%20and%20the%20Thrill%20of%20Cars&url=%2Fpets-and-cars.html" target="_blank" rel="noopener" aria-label="Share on Twitter" class="twitter-share">
+          Twitter
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fpets-and-cars.html" target="_blank" rel="noopener" aria-label="Share on Facebook" class="facebook-share">
+          Facebook
+        </a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=%2Fpets-and-cars.html" target="_blank" rel="noopener" aria-label="Share on LinkedIn" class="linkedin-share">
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  
+              </article>
 
+              
+            </main>
+          </div>
         </div>
-      </article>
-    </main>
-    
-    <footer>
-      <p>&copy; 2025 Git Pages React Framework. All rights reserved.</p>
-      <p>Built with <a href="https://github.com/git-pages-react-framework" target="_blank" rel="noopener noreferrer">Git Pages React Framework</a></p>
-    </footer>
-  </div>
 
-  <script>
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-    
-    // Check for saved theme preference or use default
-    const savedTheme = localStorage.getItem('gpr-theme');
-    if (savedTheme === 'dark') {
-      htmlElement.setAttribute('data-theme', 'dark');
-      themeToggle.textContent = '☀️';
-    }
-    
-    // Toggle theme when button is clicked
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = htmlElement.getAttribute('data-theme');
-      if (currentTheme === 'dark') {
-        htmlElement.removeAttribute('data-theme');
-        localStorage.setItem('gpr-theme', 'default');
-        themeToggle.textContent = '🌙';
-      } else {
-        htmlElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('gpr-theme', 'dark');
-        themeToggle.textContent = '☀️';
-      }
-    });
-  </script>
-</body>
-</html>
+        <!-- Theme Toggle Script -->
+        <script>
+          // Theme toggle functionality
+          const themeToggle = document.getElementById('theme-toggle');
+          const htmlElement = document.documentElement;
+          
+          // Check for saved theme preference or use default
+          const savedTheme = localStorage.getItem('gpr-theme');
+          if (savedTheme === 'dark') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+          }
+          
+          // Toggle theme when button is clicked
+          themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+              htmlElement.removeAttribute('data-theme');
+              localStorage.setItem('gpr-theme', 'default');
+              themeToggle.textContent = '🌙';
+            } else {
+              htmlElement.setAttribute('data-theme', 'dark');
+              localStorage.setItem('gpr-theme', 'dark');
+              themeToggle.textContent = '☀️';
+            }
+          });
+        </script>
+      </body>
+    </html>
