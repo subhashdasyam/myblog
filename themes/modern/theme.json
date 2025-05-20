@@ -1,0 +1,15 @@
+{
+  "name": "Modern",
+  "version": "1.0.0",
+  "description": "A modern, responsive theme for Git Pages React",
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.12",
+    "@fortawesome/fontawesome-free": "^6.5.1"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./assets/css/theme.css",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./assets/css/theme.css --watch"
+  }
+}

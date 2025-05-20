@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title || site.name }}</title>
+  <meta name="description" content="{{ page.description || site.description }}">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="/themes/modern/assets/css/theme.css">
+  
+  <!-- Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="{{ page.title || site.name }}">
+  <meta property="og:description" content="{{ page.description || site.description }}">
+  <meta property="og:type" content="{{ page.url == '/' ? 'website' : 'article' }}">
+  <meta property="og:url" content="{{ site.baseUrl }}{{ page.url | replace:'index.html','' }}">
+  {% if page.image %}
+  <meta property="og:image" content="{{ site.baseUrl }}{{ page.image }}">
+  {% else %}
+  <meta property="og:image" content="{{ site.baseUrl }}/assets/images/og-default.jpg">
+  {% endif %}
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page.title || site.name }}">
+  <meta name="twitter:description" content="{{ page.description || site.description }}">
+  {% if page.image %}
+  <meta name="twitter:image" content="{{ site.baseUrl }}{{ page.image }}">
+  {% else %}
+  <meta name="twitter:image" content="{{ site.baseUrl }}/assets/images/og-default.jpg">
+  {% endif %}
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="/" class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+          {{ site.name }}
+        </a>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
+        {% for item in site.navigation %}
+        <a href="{{ item.url }}" class="nav-link">{{ item.name }}</a>
+        {% endfor %}
+        
+        <!-- Dark mode toggle -->
+        <button id="theme-toggle" class="dark-toggle ml-4">
+          <i class="fas fa-moon dark:hidden"></i>
+          <i class="fas fa-sun hidden dark:block"></i>
+        </button>
+      </nav>
+      
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+        {% for item in site.navigation %}
+        <a href="{{ item.url }}" class="py-2 px-4 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+          {{ item.name }}
+        </a>
+        {% endfor %}
+        
+        <div class="flex justify-between items-center py-2 px-4">
+          <span>Dark Mode</span>
+          <button id="mobile-theme-toggle" class="dark-toggle">
+            <i class="fas fa-moon dark:hidden"></i>
+            <i class="fas fa-sun hidden dark:block"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    {{ content }}
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12">
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- About -->
+        <div class="md:col-span-2">
+          <h3 class="text-lg font-semibold mb-4">About {{ site.name }}</h3>
+          <p class="text-gray-600 dark:text-gray-400">
+            {{ site.description }}
+          </p>
+          <div class="flex space-x-4 mt-4">
+            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+              <i class="fab fa-github text-2xl"></i>
+            </a>
+            <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-500">
+              <i class="fab fa-twitter text-2xl"></i>
+            </a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-700">
+              <i class="fab fa-linkedin-in text-2xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="/about/" class="text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400">About Us</a></li>
+            <li><a href="/posts/" class="text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400">Blog</a></li>
+            <li><a href="/contact/" class="text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400">Contact</a></li>
+            <li><a href="/privacy/" class="text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400">Privacy Policy</a></li>
+          </ul>
+        </div>
+        
+        <!-- Newsletter -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Subscribe</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">
+            Get the latest posts delivered to your inbox.
+          </p>
+          <form class="space-y-2" onsubmit="event.preventDefault(); subscribeNewsletter(this)">
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Your email" 
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700"
+              required
+            >
+            <button type="submit" class="btn w-full">
+              Subscribe
+            </button>
+          </form>
+          <p id="newsletter-message" class="text-sm mt-2"></p>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.name }}. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Back to top button -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  
+  <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const html = document.documentElement;
+    
+    // Check for saved theme preference or use system preference
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+    
+    // Toggle theme
+    function toggleTheme() {
+      html.classList.toggle('dark');
+      localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+    }
+    
+    // Add event listeners
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+    if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+    
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuButton.innerHTML = mobileMenu.classList.contains('hidden') ? 
+          '<i class="fas fa-bars"></i>' : 
+          '<i class="fas fa-times"></i>';
+      });
+    }
+    
+    // Back to top button
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.remove('opacity-0', 'invisible');
+        backToTopButton.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopButton.classList.remove('opacity-100', 'visible');
+        backToTopButton.classList.add('opacity-0', 'invisible');
+      }
+    });
+    
+    if (backToTopButton) {
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+    
+    // Initialize syntax highlighting
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block);
+      });
+    });
+    
+    // Newsletter subscription
+    function subscribeNewsletter(form) {
+      const email = form.querySelector('input[name="email"]').value;
+      const messageElement = document.getElementById('newsletter-message');
+      
+      if (!email) {
+        showMessage('Please enter your email address.', 'error', messageElement);
+        return;
+      }
+      
+      // Simulate API call
+      showMessage('Subscribing...', 'info', messageElement);
+      
+      setTimeout(() => {
+        showMessage('Thank you for subscribing! Please check your email to confirm.', 'success', messageElement);
+        form.reset();
+      }, 1000);
+    }
+    
+    function showMessage(message, type, element) {
+      if (!element) return;
+      
+      element.textContent = message;
+      element.className = 'text-sm mt-2 ';
+      
+      switch (type) {
+        case 'error':
+          element.className += 'text-red-600 dark:text-red-400';
+          break;
+        case 'success':
+          element.className += 'text-green-600 dark:text-green-400';
+          break;
+        case 'info':
+        default:
+          element.className += 'text-blue-600 dark:text-blue-400';
+      }
+    }
+  </script>
+</body>
+</html>
