@@ -1,0 +1,162 @@
+---
+layout: default
+---
+
+<div class="gpr-posts py-12">
+  <div class="container">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-2">
+        {{ page.category | capitalize }}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400">
+        {{ site.categories[page.category].size }} post{% if site.categories[page.category].size != 1 %}s{% endif %} in this category
+      </p>
+    </header>
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+      <span class="mx-2">/</span>
+      <a href="/posts/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Blog</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-900 dark:text-white">{{ page.category | capitalize }}</span>
+    </nav>
+    
+    <!-- Posts Grid -->
+    <div class="gpr-posts-grid">
+      {% for post in site.categories[page.category] %}
+      <article class="gpr-post-card">
+        {% if post.image %}
+        <a href="{{ post.url }}" class="block">
+          <img 
+            src="{{ post.image }}" 
+            alt="{{ post.title }}" 
+            class="gpr-post-image"
+            loading="lazy"
+          >
+        </a>
+        {% endif %}
+        <div class="gpr-post-content">
+          <div class="gpr-post-meta">
+            <time datetime="{{ post.date | date: '%Y-%m-%d' }}" class="text-sm text-gray-500 dark:text-gray-400">
+              {{ post.date | date: "%B %-d, %Y" }}
+            </time>
+            {% if post.tags %}
+            <span class="gpr-post-tag">
+              {{ post.tags[0] }}
+            </span>
+            {% endif %}
+          </div>
+          <h3 class="gpr-post-title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </h3>
+          <p class="gpr-post-excerpt">
+            {{ post.excerpt | strip_html | truncatewords: 25 }}
+          </p>
+          <a href="{{ post.url }}" class="gpr-post-readmore">
+            Read more
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    
+    <!-- Back to Categories -->
+    <div class="mt-12 text-center">
+      <a 
+        href="/posts/" 
+        class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+      >
+        <i class="fas fa-arrow-left mr-2"></i>
+        Back to all categories
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Other Categories Section -->
+{% assign other_categories = site.categories | sort | where_exp: 'category', 'category[0] != page.category' %}
+{% if other_categories.size > 0 %}
+<section class="bg-gray-50 dark:bg-gray-900 py-16">
+  <div class="container">
+    <h2 class="text-2xl font-bold text-center mb-8">Other Categories</h2>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for category in other_categories limit: 3 %}
+        {% assign category_name = category[0] %}
+        {% assign posts_count = category[1].size %}
+        
+        <a 
+          href="/category/{{ category_name | slugify }}/" 
+          class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xl font-semibold">{{ category_name }}</h3>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{{ posts_count }} post{% if posts_count != 1 %}s{% endif %}</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-400">
+            {% if category_name == 'AI' %}
+              Artificial Intelligence and Machine Learning insights
+            {% elsif category_name == 'Security' %}
+              Cybersecurity best practices and vulnerabilities
+            {% elsif category_name == 'Kubernetes' %}
+              Container orchestration and cloud-native technologies
+            {% elsif category_name == 'DevOps' %}
+              Development and Operations methodologies
+            {% else %}
+              Read our latest posts about {{ category_name }}
+            {% endif %}
+          </p>
+          <div class="mt-4 text-blue-600 dark:text-blue-400 font-medium flex items-center">
+            View all posts
+            <i class="fas fa-arrow-right ml-2"></i>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    
+    {% if other_categories.size > 3 %}
+    <div class="text-center mt-8">
+      <a 
+        href="/posts/" 
+        class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+      >
+        View all categories
+        <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Newsletter Section -->
+<section class="bg-blue-600 text-white py-16">
+  <div class="container max-w-3xl text-center">
+    <h2 class="text-3xl font-bold mb-4">Stay Updated</h2>
+    <p class="text-blue-100 mb-8">
+      Subscribe to our newsletter to get the latest posts on {{ page.category }} and other topics delivered to your inbox.
+    </p>
+    
+    <form class="max-w-md mx-auto flex gap-2" onsubmit="event.preventDefault(); subscribeNewsletter(this)">
+      <input 
+        type="email" 
+        name="email" 
+        placeholder="Your email address" 
+        class="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600 text-gray-900"
+        required
+      >
+      <button 
+        type="submit" 
+        class="px-6 py-3 bg-white text-blue-700 font-medium rounded-lg hover:bg-blue-50 transition-colors"
+      >
+        Subscribe
+      </button>
+    </form>
+    <div id="newsletter-message" class="mt-3 text-sm text-blue-200"></div>
+    <p class="text-sm text-blue-200 mt-4">
+      We respect your privacy. Unsubscribe at any time.
+    </p>
+  </div>
+</section>

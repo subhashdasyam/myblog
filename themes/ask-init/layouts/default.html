@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} | {{ site.name }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/favicon.ico">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="/themes/ask-init/theme.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.baseUrl }}{{ page.url }}">
+  <meta property="og:title" content="{{ page.title }} | {{ site.name }}">
+  <meta property="og:description" content="{{ page.description | default: site.description }}">
+  <meta property="og:image" content="{{ site.baseUrl }}{{ page.image | default: site.seo.defaultImage }}">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ site.baseUrl }}{{ page.url }}">
+  <meta property="twitter:title" content="{{ page.title }} | {{ site.name }}">
+  <meta property="twitter:description" content="{{ page.description | default: site.description }}">
+  <meta property="twitter:image" content="{{ site.baseUrl }}{{ page.image | default: site.seo.defaultImage }}">
+</head>
+<body>
+  <!-- Header -->
+  <header class="gpr-header">
+    <div class="container">
+      <div class="gpr-header-content">
+        <a href="/" class="gpr-logo">
+          <i class="fas fa-rocket"></i>
+          <span>{{ site.name }}</span>
+        </a>
+        
+        <nav class="gpr-nav hidden md:flex">
+          <a href="/" class="{% if page.url == '/' %}active{% endif %}">Home</a>
+          <a href="/posts/" class="{% if page.url contains '/post/' or page.url contains '/posts/' %}active{% endif %}">Blog</a>
+          <a href="/about/" class="{% if page.url == '/about/' %}active{% endif %}">About</a>
+          <a href="/contact/" class="{% if page.url == '/contact/' %}active{% endif %}">Contact</a>
+        </nav>
+        
+        <div class="flex items-center gap-4">
+          <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            <i class="fas fa-moon theme-toggle-icon"></i>
+          </button>
+          
+          <button class="md:hidden" onclick="toggleMenu()" aria-label="Toggle menu">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden md:hidden py-4">
+        <nav class="flex flex-col gap-2">
+          <a href="/" class="px-4 py-2 rounded {% if page.url == '/' %}bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300{% else %}hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}">Home</a>
+          <a href="/posts/" class="px-4 py-2 rounded {% if page.url contains '/post/' or page.url contains '/posts/' %}bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300{% else %}hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}">Blog</a>
+          <a href="/about/" class="px-4 py-2 rounded {% if page.url == '/about/' %}bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300{% else %}hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}">About</a>
+          <a href="/contact/" class="px-4 py-2 rounded {% if page.url == '/contact/' %}bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300{% else %}hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main>
+    {{ content }}
+  </main>
+  
+  <!-- Footer -->
+  <footer class="gpr-footer">
+    <div class="container">
+      <div class="gpr-footer-content">
+        <div class="gpr-footer-about">
+          <a href="/" class="gpr-footer-logo">{{ site.name }}</a>
+          <p class="text-gray-600 dark:text-gray-400">
+            {{ site.description }}
+          </p>
+        </div>
+        
+        <div class="gpr-footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/posts/">Blog</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/terms/">Terms of Service</a></li>
+          </ul>
+        </div>
+        
+        <div class="gpr-footer-newsletter">
+          <h3>Newsletter</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">
+            Subscribe to get notified about new posts and updates.
+          </p>
+          <form class="gpr-newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this)">
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Your email" 
+              class="gpr-newsletter-input"
+              required
+            >
+            <button type="submit" class="gpr-newsletter-btn">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+          <div id="newsletter-message" class="mt-2 text-sm"></div>
+        </div>
+      </div>
+      
+      <div class="gpr-footer-bottom">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          &copy; {{ 'now' | date: "%Y" }} {{ site.name }}. All rights reserved.
+        </p>
+        
+        <div class="gpr-social-links">
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="/rss.xml" aria-label="RSS Feed">
+            <i class="fas fa-rss"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Theme JS -->
+  <script src="/themes/ask-init/theme.js"></script>
+  
+  <!-- Analytics (optional) -->
+  {% if site.analytics.enabled %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.googleAnalyticsId }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ site.analytics.googleAnalyticsId }}');
+  </script>
+  {% endif %}
+</body>
+</html>
