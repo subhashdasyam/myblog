@@ -92,5 +92,35 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
+    function ({ addComponents }) {
+      addComponents({
+        '.container': {
+          maxWidth: '100%',
+          '@screen sm': {
+            maxWidth: '640px',
+          },
+          '@screen md': {
+            maxWidth: '768px',
+          },
+          '@screen lg': {
+            maxWidth: '1024px',
+          },
+          '@screen xl': {
+            maxWidth: '1280px',
+          },
+          '@screen 2xl': {
+            maxWidth: '1440px',
+          },
+        },
+      })
+    },
   ],
+  variants: {
+    extend: {
+      typography: ['dark'],
+      backgroundColor: ['dark', 'dark-hover', 'dark-group-hover'],
+      borderColor: ['dark', 'dark-focus', 'dark-focus-within'],
+      textColor: ['dark', 'dark-hover', 'dark-active'],
+    },
+  },
 }
